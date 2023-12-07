@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express'
 import cors from 'cors'
+
 import { logger } from './utils/log';
 import albumRouter from './router/albumRouter'
 import photoRouter from './router/photoRouter'
@@ -10,7 +11,10 @@ const hostname = '0.0.0.0'
 const port = 3000
 
 
-app.use(cors())
+
+app.use(cors({ origin: "*" }))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.get('/', (req: Request, res: Response) => {
     res.send('HelloWorld!')
 })

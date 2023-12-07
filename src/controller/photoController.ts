@@ -6,7 +6,7 @@ export default class {
         res.send('hello photo get')
     }
     static post(req: Request, res: Response) {
-        stdout.debug(req.body)
+        stdout.debug({...req.body})
         res.send('hello photo post')
     }
 }
