@@ -9,23 +9,28 @@ export default class {
     }
     static async post(req: Request, res: Response) {
         const R = new Result(res)
-        const { album_name, description, user_id } = req.body
-        if (!album_name) {
-            R.failed('album_name字段不能为空!').send()
+        const { albumname, description, username } = req.body
+        if (!albumname) {
+            R.failed('albumname字段不能为空!')
         } else {
             const sql = `INSERT INTO album(\
-                album_name${description ? ',\
-                description': ''}${user_id ? ',\
-                user_id': ''}) VALUES(?${description ? ',\
-                ?': ''}${user_id ? ',\
+                albumname${description ? ',\
+                description': ''}${username ? ',\
+                username': ''}) VALUES(?${description ? ',\
+                ?': ''}${username ? ',\
                 ?': ''})`;
             try {
-                const db = await dbCreate()
-                await db.execute(sql, [album_name, description, user_id].filter(i => i))
-                R.success("添加相册成功!").send()
-            } catch (err) {
+                const db = dbCreate()
+                await db.execute(sql, [albumname, description, username])
+                R.success("添加相册成功!")
+            } catch (err: any) {
                 logger.error(err)
-                R.error("服务器出错!").send()
+                stdout.debug(err.code)
+                if (err['code'] == 'ER_DUP_ENTRY') {
+                    R.failed('该相册已存在!')
+                } else {
+                    R.error("服务器出错!")
+                }
             }
         }
     }

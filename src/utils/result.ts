@@ -23,19 +23,19 @@ export default class {
     success(msg: string) {
         this.body.code = 200
         this.body.msg = msg
-        return this
+        this.send()
     }
 
     failed(msg: string) {
         this.body.code = 400
         this.body.msg = msg
-        return this
+        this.send()
     }
 
-    error(msg: string) {
+    error(msg?: string) {
         this.body.code = 500
-        this.body.msg = msg
-        return this
+        this.body.msg = msg || "服务器出错!"
+        this.send()
     }
 
     setData(data: result_data) {

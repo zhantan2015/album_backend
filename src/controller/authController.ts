@@ -15,10 +15,10 @@ export default class {
             stdout.debug(result)
             if (result.length > 0) next()
             else
-                R.failed('用户名或密码错误').send()
+                R.failed('用户名或密码错误')
         } catch (err) {
             logger.error(err)
-            R.error('服务器错误!').send()
+            R.error()
         }
     }
 }

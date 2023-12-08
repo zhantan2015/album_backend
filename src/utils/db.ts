@@ -22,13 +22,14 @@ class DB {
     execute(sql: string, values?: [...any]) {
         logger.info(sql, values)
         return new Promise((resolve, reject) => {
-            this.conn!.execute(sql, values, (err, result) => {
-                if (err) {
-                    reject(err)
-                } else {
-                    resolve(result)
-                }
-            })
+            this.conn!.execute(sql, values?.filter(i => i)
+                , (err, result) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(result)
+                    }
+                })
         })
     }
 }
