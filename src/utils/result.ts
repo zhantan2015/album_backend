@@ -40,6 +40,7 @@ export default class {
 
     setData(data: result_data) {
         this.body.data = data
+        return this
     }
 
     send() {

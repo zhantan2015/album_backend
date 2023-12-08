@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from 'express'
 import multer from 'multer'
-import { logger, stdout } from '../log'
+import { logger, stdout } from '../utils/log'
 import randStr from '../utils/randStr'
 import getExt from '../utils/getExt'
 
 
 export default (filename: string, path?: string) => {
-    const _path = path || 'upload'
+    const _path = path || 'upload/img/'
     const storage = multer.diskStorage({
         destination(req, file, cb) {
             cb(null, _path)
@@ -19,7 +19,6 @@ export default (filename: string, path?: string) => {
     })
 
     return (req: Request, res: Response, next: NextFunction) => {
-
         const upload = multer({ storage }).single(filename)
         upload(req, res, err => {
             if (err) {
