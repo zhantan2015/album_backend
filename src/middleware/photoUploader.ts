@@ -21,12 +21,10 @@ export default (filename: string, path?: string) => {
 
     return (req: Request, res: Response, next: NextFunction) => {
         const R = new Result(res)
-        stdout.debug({ ...req.body })
         const username = req.body.username
 
         const upload = multer({ storage }).single(filename)
         upload(req, res, (err) => {
-            stdout.debug('====================')
 
             if (!req.file || !req.body.albumname) {
                 R.failed("输入参数有误！")
@@ -39,7 +37,6 @@ export default (filename: string, path?: string) => {
                 req.body.uri = req.file?.path
                 req.body.url = '/img/' + req.file?.filename
                 req.body.username = username
-                stdout.debug({ ...req.body })
                 next()
             }
         })
