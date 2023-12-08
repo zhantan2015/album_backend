@@ -9,7 +9,7 @@ import authRouter from './router/authRouter'
 
 const app = express();
 const hostname = '0.0.0.0'
-const port = 3000
+const port = 3001
 
 app.use(cors({ origin: "*" }))
 app.use(express.json())
