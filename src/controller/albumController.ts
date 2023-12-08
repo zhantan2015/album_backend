@@ -1,11 +1,26 @@
 import { Request, Response } from "express";
 import { logger, stdout } from "../utils/log";
 import Result from "../utils/result";
-import dbCreate from '../utils/db'
+import createDB from "../utils/db";
 
 export default class {
-    static get(req: Request, res: Response) {
-        res.send('hello album get')
+    static async get(req: Request, res: Response) {
+        const R = new Result(res)
+        const albumname = req.query['albumname']
+        let sql = `SELECT album_id,
+        albumname,
+        description,
+        username,
+        DATE_FORMAT(createtime,'%Y-%m-%d %H:%i:%s') createtime,
+        DATE_FORMAT(updatetime,'%Y-%m-%d %H:%i:%s') updatetime FROM album ${albumname ? "WHERE albumname = ?" : ""}`
+        try {
+            const db = createDB()
+            const result: any = await db.execute(sql, [albumname])
+            R.setData(result).success('获取相册成功!')
+        } catch (err) {
+            logger.error(err)
+            R.error()
+        }
     }
     static async post(req: Request, res: Response) {
         const R = new Result(res)
@@ -20,7 +35,7 @@ export default class {
                 ?': ''}${username ? ',\
                 ?': ''})`;
             try {
-                const db = dbCreate()
+                const db = createDB()
                 await db.execute(sql, [albumname, description, username])
                 R.success("添加相册成功!")
             } catch (err: any) {

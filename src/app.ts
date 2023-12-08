@@ -14,13 +14,13 @@ const port = 3000
 app.use(cors({ origin: "*" }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static('upload'))
 
 app.use('/auth', authRouter)
 app.use('*',verifyToken)
 app.use('/album', albumRouter)
 app.use('/photo', photoRouter)
 
+app.use(express.static('upload'))
 app.get('/', (req, res: Response) => { res.send('HelloWorld!') })
 
 app.listen(port, hostname, () => {
