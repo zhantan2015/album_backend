@@ -2,7 +2,7 @@ node_modules
 build
 logs
 upload
-*/**/config.json
+*/**/*config.json
 
 .DS_Store
 node_modules

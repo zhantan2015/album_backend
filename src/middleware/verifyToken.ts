@@ -1,3 +1,4 @@
+// @ts-ignore
 import config from '../config.json'
 import jwt from 'jsonwebtoken';
 import Reslut from '../utils/result';

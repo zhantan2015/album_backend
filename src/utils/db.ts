@@ -1,6 +1,7 @@
 import msyql from 'mysql2'
 import { logger, stdout } from './log'
 import { Connection } from 'mysql2'
+// @ts-ignore
 import config from '../config.json'
 
 class DB {
